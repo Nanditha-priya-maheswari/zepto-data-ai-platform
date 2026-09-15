@@ -4,31 +4,30 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 
-# 1. Load and clean the data
+
 print("Preparing data for machine learning...")
 df = pd.read_csv('analytics/titanic.csv')
 df = df.drop(columns=['deck'])
 df['age'] = df['age'].fillna(df['age'].median())
 df = df.dropna(subset=['embarked'])
 
-# 2. Feature Selection & Encoding
-# We select columns that are useful for predicting survival
+
 features = ['pclass', 'sex', 'age', 'fare', 'sibsp', 'parch']
 X = df[features].copy()
 y = df['survived']
 
-# Convert 'sex' (male/female) to numbers (1/0) so the model can read it
+
 X['sex'] = LabelEncoder().fit_transform(X['sex'])
 
-# 3. Train-Test Split (80% for training, 20% for testing)
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# 4. Train the Model
+
 print("Training Random Forest Classifier...\n")
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X_train, y_train)
 
-# 5. Evaluate the Model
+
 predictions = model.predict(X_test)
 accuracy = accuracy_score(y_test, predictions)
 
