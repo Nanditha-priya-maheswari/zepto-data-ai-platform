@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import sqlite3
 
+
 # 1. Scrape 60 Books across 3 Categories
 categories = {
     'Travel': 'https://books.toscrape.com/catalogue/category/books/travel_2/index.html',
@@ -53,7 +54,8 @@ df_books.drop(columns=['category', 'category_name'], inplace=True)
 df_books['book_id'] = range(1, len(df_books) + 1)
 
 # 3. SQLite Database Integration (PK/FK)
-conn = sqlite3.connect('zepto_catalog.db')
+conn = sqlite3.connect('data_pipeline/zepto_catalog.db')
+
 cursor = conn.cursor()
 
 # Drop existing tables to ensure clean schema creation
