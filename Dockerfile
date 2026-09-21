@@ -1,14 +1,6 @@
-# Use a lightweight Python version
 FROM python:3.10-slim
-
-# Set the working folder inside the container
 WORKDIR /app
-
-# Copy all your project files into the container
 COPY . /app
-
-# Install the required libraries
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Tell the container what to run when it starts
-CMD ["python", "genai/assistant.py"]
+EXPOSE 8000
+CMD ["uvicorn", "genai.01_assistant:app", "--host", "0.0.0.0", "--port", "8000"]
